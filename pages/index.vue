@@ -1,92 +1,138 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
-  >
-    <v-flex
-      xs12
-      sm8
-      md6
-    >
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
+  <div>
+    {{new Date().toISOString().substr(0, 10)}}
+      <h1>Dollar variation</h1>
+
+      <v-layout>
+        <v-flex xs3>
+
+          <v-menu
+            ref="menu1"
+            v-model="menu1"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                v-model="dateFormatted"
+                v-on="on"
+                label="Date"
+                hint="DD/MM/YYYY format"
+                persistent-hint
+                prepend-icon=""
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="date" no-title @input="onChangeFilter"></v-date-picker>
+          </v-menu>
+
+          <!-- <v-menu
+            v-model="menu"
+            :close-on-content-click="false"
+            :return-value.sync="date"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                v-on="on"
+                label="Picker in menu"
+                readonly
+                :value="date"
+                @click="onChangeFilter"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              locale="es-ES"
+              v-model="date"
+              @input="menu = false"
+              max="2019-12-31"
+            ></v-date-picker>
+          </v-menu> -->
+
+        </v-flex>
+      </v-layout>
+
+
+      <div class="grid">
+        <!-- {{getShowChart}}--{{getChartName}} -->
+        <component v-if="getShowChart" :is="getChartName"></component>
+        <!-- <ChartBar v-if="getShowChart" /> -->
+
       </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import axios from 'axios'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
+
+import ChartBar from '@/components/chart-bar'
 
 export default {
   components: {
-    Logo,
-    VuetifyLogo
+    ChartBar
+  },
+  data () {
+    return {
+      chart: null,
+      menu1: false,
+      date: '2019-01-02',
+      dateFormatted: this.formatDate('2019-01-02'),
+      API: 'https://mindicador.cl/api/dolar/'
+    }
+  },
+  watch: {
+    date (val) {
+      this.dateFormatted = this.formatDate(this.date)
+    },
+  },
+  methods: {
+    ...mapActions([
+      'getDollar'
+    ]),
+    ...mapMutations([
+      'setCurrentDate',
+      'setShowChart',
+      'setChartName'
+    ]),
+    async onChangeFilter() {
+      await this.setChartName('')
+      await this.setShowChart(false)
+      this.menu = true
+      const selectedDate = await this.parseDate(this.date)
+      const url = `${this.API}${selectedDate}`
+      await this.getDollar(url)
+    },
+    formatDate (date) {
+      if (!date) return null
+      const [year, month, day] = date.split('-')
+      return `${day}/${month}/${year}`
+    },
+    parseDate (date) {
+      if (!date) return null
+      const [year, month, day] = date.split('-')
+      return `${day.padStart(2, '0')}-${month.padStart(2, '0')}-${year}`
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'getShowChart',
+      'getChartName'
+    ])
+  },
+  async mounted () {
+    this.getDollar(`${this.API}02-01-2019`)
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.grid {
+  display: grid;
+  row-gap: 2rem;
+}
+</style>

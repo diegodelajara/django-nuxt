@@ -1,7 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -30,13 +29,13 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '@/plugins/chart', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
   /*
@@ -59,7 +58,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
