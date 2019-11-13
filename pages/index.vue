@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{new Date().toISOString().substr(0, 10)}}
       <h1>Dollar variation</h1>
 
       <v-layout>
@@ -20,38 +19,12 @@
                 v-model="dateFormatted"
                 v-on="on"
                 label="Date"
-                hint="DD/MM/YYYY format"
                 persistent-hint
                 prepend-icon=""
               ></v-text-field>
             </template>
             <v-date-picker v-model="date" no-title @input="onChangeFilter"></v-date-picker>
           </v-menu>
-
-          <!-- <v-menu
-            v-model="menu"
-            :close-on-content-click="false"
-            :return-value.sync="date"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on }">
-              <v-text-field
-                v-on="on"
-                label="Picker in menu"
-                readonly
-                :value="date"
-                @click="onChangeFilter"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              locale="es-ES"
-              v-model="date"
-              @input="menu = false"
-              max="2019-12-31"
-            ></v-date-picker>
-          </v-menu> -->
 
         </v-flex>
       </v-layout>

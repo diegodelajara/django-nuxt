@@ -1,21 +1,7 @@
 <template>
   <div class="card">
     <div v-if="getShowChart" class="card-img-bottom">
-      {{getRandomNum}}
-      <!-- <canvas id="fooCanvas" count="2" /> -->
 
-      <!-- <chartjs-bar
-        v-for="(item, index) in types"
-        :key="index"
-        :backgroundcolor="item.bgColor"
-        :beginzero="beginZero"
-        :bind="true"
-        :bordercolor="item.borderColor"
-        :data="item.data"
-        :datalabel="item.dataLabel"
-        :labels="labels"
-        target="fooCanvas"
-      /> -->
       <chartjs-bar :backgroundcolor="colors" :labels="labels" :data="dataset" :dataentry="dataentry" :datalabel="datalabel" :bind="true" />
 
     </div>
@@ -49,15 +35,15 @@ export default {
     },
     setLabels() {
       this.labels = [
-        this.formatDate(this.getPreviousResult.fecha),
-        this.formatDate(this.getCurrentResult.fecha)
+        this.formatDate(this.getCurrentResult.fecha),
+        this.formatDate(this.getPreviousResult.fecha)
 
       ]
     },
     setDataSets() {
       this.dataset = [
-        this.getPreviousResult.valor,
-        this.getCurrentResult.valor
+        this.getCurrentResult.valor,
+        this.getPreviousResult.valor
       ]
     },
     setColors() {
