@@ -11,7 +11,6 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { MY_COLORS } from '@/constants'
 
 export default {
   data() {
@@ -23,8 +22,7 @@ export default {
       dataentry: 'null1',
       datalabel: 'Dollar variation',
       dataset: [],
-      labels: [],
-      myColors: MY_COLORS
+      labels: []
     }
   },
   methods: {
@@ -45,12 +43,6 @@ export default {
         this.getCurrentResult.valor,
         this.getPreviousResult.valor
       ]
-    },
-    setColors() {
-      this.colors = [
-        this.myColors[this.getRandomNum],
-        this.myColors[this.getRandomNum]
-      ]
     }
   },
   computed: {
@@ -58,16 +50,15 @@ export default {
       'getCurrentResult',
       'getPreviousResult',
       'getShowChart'
-    ]),
-    getRandomNum: function() {
-      return Math.floor(Math.random() * (7 - 1))
-    }
+    ])
   },
   mounted () {
-    if (this.getCurrentResult != '') {
-      this.setLabels()
-      this.setDataSets()
-      // this.setColors()
+    // console.log('%c var', 'color:cyan;', 'var')
+    if (this.getCurrentResult) {
+      if (this.getCurrentResult != '') {
+        this.setLabels()
+        this.setDataSets()
+      }
     }
   }
 }

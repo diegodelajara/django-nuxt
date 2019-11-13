@@ -4,8 +4,7 @@ const initialState = {
   currentResult: null,
   previousResult: null,
   showChart: false,
-  chartName: 'ChartBar',
-  labels: []
+  chartName: 'ChartBar'
 }
 
 export default () => {

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <client-only>
       <h1>Dollar variation</h1>
 
       <v-layout>
@@ -24,17 +25,16 @@
               ></v-text-field>
             </template>
             <v-date-picker v-model="date" no-title @input="onChangeFilter"></v-date-picker>
+
           </v-menu>
 
         </v-flex>
       </v-layout>
+    </client-only>
 
 
       <div class="grid">
-        <!-- {{getShowChart}}--{{getChartName}} -->
         <component v-if="getShowChart" :is="getChartName"></component>
-        <!-- <ChartBar v-if="getShowChart" /> -->
-
       </div>
   </div>
 </template>
@@ -43,7 +43,7 @@
 import axios from 'axios'
 import { mapActions, mapMutations, mapGetters } from 'vuex'
 
-import ChartBar from '@/components/chart-bar'
+import ChartBar from '@/components/ChartBar'
 
 export default {
   components: {
