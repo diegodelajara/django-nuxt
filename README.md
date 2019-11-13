@@ -1,22 +1,24 @@
-# front
+# Dollar graph price variation
 
-> My spectacular Nuxt.js project
+> this is a web development project about variation price on differents days
 
 ## Build Setup
 
 ``` bash
-# install dependencies
-$ npm run install
+# After clone the project, you need to install dependencies
+$ npm install or yarn
 
-# serve with hot reload at localhost:3000
+# Then run project
 $ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+# And finally run some test
+$ npm run test
 
-# generate static project
-$ npm run generate
 ```
+```javascript
+Diego de la Jara = () => {
+  email: 'd.delajaral@gmail.com',
+  phone: '+569 75792850'
+}
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+```
