@@ -18,7 +18,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "chart.js": "^2.9.2",
     "hchs-vue-charts": "^1.2.8",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "nuxt": "^2.0.0",
     "vue-lodash": "^2.0.2",
     "vue-morris": "^1.1.0"
