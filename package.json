@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.4",
     "hchs-vue-charts": "^1.2.8",
     "jquery": "^3.4.1",
     "nuxt": "^2.0.0",
